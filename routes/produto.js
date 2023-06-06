@@ -1,12 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const {ObjectId} = require("mongodb");
 const router = express.Router();
 
 const db = mongoose.connection;
 
 router.get('/:id?', async function (req, res, next) {
     try {
-        const db = await connect();
         if (req.params.id)
             res.json(await db.collection("produtos").findOne({ _id: new ObjectId(req.params.id) }));
         else
@@ -22,7 +22,6 @@ router.get('/:id?', async function (req, res, next) {
 router.post('/', async function (req, res, next) {
     try {
         const produtos = req.body;
-        const db = await connect();
         res.json(await db.collection("produtos").insertOne(produtos));
     }
     catch (ex) {
@@ -35,7 +34,6 @@ router.post('/', async function (req, res, next) {
 router.put('/:id', async function (req, res, next) {
     try {
         const produtos = req.body;
-        const db = await connect();
         res.json(await db.collection("produtos").updateOne({ _id: new ObjectId(req.params.id) }, { $set: produtos }));
     }
     catch (ex) {
@@ -47,7 +45,6 @@ router.put('/:id', async function (req, res, next) {
 //delete produtos
 router.delete('/:id', async function (req, res, next) {
     try {
-        const db = await connect();
         res.json(await db.collection("produtos").deleteOne({ _id: new ObjectId(req.params.id) }));
     }
     catch (ex) {

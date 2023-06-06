@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const express = require("express");
 
@@ -44,7 +44,7 @@ router.post("/registro", async (req, res) => {
       } else {
         // Gerar um token JWT
         const token = jwt.sign(
-          { id: usuario._id, nome: usuario.nome, isAdmin: usuario?.isAdmin },
+          { id: usuario._id, nome: usuario.nome, isAdmin: usuario.isAdmin },
           "change-of-mind",
           { expiresIn: "1h" }
         );
@@ -87,4 +87,4 @@ router.post("/registro", async (req, res) => {
     }
   });
 
-  modules.exports = router;
+  module.exports = router;
